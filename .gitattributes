@@ -1,0 +1,9 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# HTML game files
+*.html linguist-language=HTML
+
+# Mark games directory as generated/vendored to reduce noise in diffs
+games/** linguist-generated=true
+games.json linguist-generated=true
