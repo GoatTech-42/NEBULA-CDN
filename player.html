@@ -3,507 +3,1209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEBULA CDN - Game Library | GoatTech Industries</title>
+<title>NEBULA CDN — Game Library</title>
 <meta name="description" content="Browse and play 2790+ browser games instantly. Powered by NEBULA CDN from GoatTech Industries.">
 <meta name="author" content="GoatTech Industries">
-<meta property="og:title" content="NEBULA CDN - Game Library">
+<meta property="og:title" content="NEBULA CDN — Game Library">
 <meta property="og:description" content="Browse and play 2790+ browser games instantly. No downloads required.">
 <meta property="og:type" content="website">
 <style>
+/* ─── Reset & Root ─────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
---bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a28;--surface3:#222236;
---border:#2a2a42;--text:#e4e4f0;--text2:#8888aa;--accent:#7c5cfc;
---accent2:#5c3cdc;--accent-glow:rgba(124,92,252,0.15);--green:#2ecc71;
---red:#e74c3c;--orange:#f39c12;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,0.4);
+  --bg:#07070e;
+  --surface:#0f0f1a;
+  --surface2:#161625;
+  --surface3:#1e1e30;
+  --border:#272740;
+  --border2:#32324e;
+  --text:#ddddf0;
+  --text2:#7777a0;
+  --text3:#4a4a6a;
+  --accent:#7c5cfc;
+  --accent2:#5c3cdc;
+  --accent3:#9f7fff;
+  --accent-glow:rgba(124,92,252,0.18);
+  --accent-glow2:rgba(124,92,252,0.08);
+  --green:#27c77b;
+  --red:#e74c3c;
+  --orange:#f39c12;
+  --yellow:#f1c40f;
+  --radius:14px;
+  --radius-sm:8px;
+  --shadow:0 8px 32px rgba(0,0,0,0.5);
+  --shadow-sm:0 2px 12px rgba(0,0,0,0.3);
+  --header-h:64px;
+  --sidebar-w:240px;
+  --transition:0.18s ease;
 }
 html{font-size:16px;scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;overflow-x:hidden}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-button{cursor:pointer;font-family:inherit}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.5;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+img{display:block}
 ::selection{background:var(--accent);color:#fff}
-::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--surface)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 
-/* Header */
-.header{background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba(18,18,26,0.92)}
-.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:0.75rem;font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.5px}
-.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),#a78bfa);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
-.logo span{background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.header-stats{display:flex;gap:1rem;margin-left:auto}
-.stat{background:var(--surface2);padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;color:var(--text2);border:1px solid var(--border)}
-.stat b{color:var(--accent);font-weight:700}
+/* ─── Header ─────────────────────────────────────────── */
+.header{
+  position:sticky;top:0;z-index:200;
+  height:var(--header-h);
+  background:rgba(7,7,14,0.88);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.header-inner{
+  max-width:1600px;margin:0 auto;height:100%;
+  display:flex;align-items:center;gap:1rem;
+  padding:0 1.25rem;
+}
+.logo{
+  display:flex;align-items:center;gap:0.6rem;
+  font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:-0.3px;
+  white-space:nowrap;flex-shrink:0;
+}
+.logo-icon{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--accent) 0%,#a78bfa 100%);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+  box-shadow:0 0 12px var(--accent-glow);
+  flex-shrink:0;
+}
+.logo span{
+  background:linear-gradient(135deg,#a78bfa,var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
 
-/* Search Bar */
-.search-section{max-width:1400px;margin:1.5rem auto;padding:0 2rem}
-.search-wrap{position:relative}
-.search-wrap svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--text2);pointer-events:none}
-#search{width:100%;padding:0.9rem 1rem 0.9rem 2.8rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:1rem;transition:border-color 0.2s,box-shadow 0.2s;outline:none}
-#search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-#search::placeholder{color:var(--text2)}
-.search-hint{display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;font-size:0.8rem;color:var(--text2)}
-.kbd{background:var(--surface2);border:1px solid var(--border);padding:0.1rem 0.4rem;border-radius:4px;font-family:monospace;font-size:0.75rem}
+/* Search in header */
+.header-search{
+  flex:1;max-width:520px;
+  position:relative;
+}
+.header-search svg{
+  position:absolute;left:0.9rem;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;color:var(--text2);pointer-events:none;flex-shrink:0;
+}
+#search{
+  width:100%;
+  padding:0.55rem 2.5rem 0.55rem 2.4rem;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  font-size:0.88rem;
+  transition:border-color var(--transition),box-shadow var(--transition);
+  outline:none;
+}
+#search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow2)}
+#search::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:0.7rem;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;
+  background:var(--text3);color:var(--bg);
+  border-radius:50%;
+  font-size:0.65rem;font-weight:700;
+  display:none;align-items:center;justify-content:center;
+  cursor:pointer;border:none;
+  transition:background var(--transition);
+}
+.search-clear.visible{display:flex}
+.search-clear:hover{background:var(--text2)}
 
-/* Category Filter */
-.categories{max-width:1400px;margin:0 auto 1rem;padding:0 2rem;display:flex;gap:0.5rem;flex-wrap:wrap}
-.cat-btn{padding:0.4rem 0.9rem;background:var(--surface2);border:1px solid var(--border);border-radius:20px;color:var(--text2);font-size:0.82rem;transition:all 0.2s;white-space:nowrap}
-.cat-btn:hover{border-color:var(--accent);color:var(--text)}
-.cat-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
-.cat-btn .count{opacity:0.6;font-size:0.75rem;margin-left:0.2rem}
+.header-right{
+  margin-left:auto;display:flex;align-items:center;gap:0.75rem;flex-shrink:0;
+}
+.stat-pill{
+  display:flex;align-items:center;gap:0.4rem;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:0.35rem 0.7rem;
+  font-size:0.75rem;
+  color:var(--text2);
+  white-space:nowrap;
+}
+.stat-pill b{color:var(--accent);font-weight:700}
 
-/* Sort/View Controls */
-.controls{max-width:1400px;margin:0 auto 1rem;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem}
-.results-count{font-size:0.9rem;color:var(--text2)}
-.results-count b{color:var(--text)}
-.view-controls{display:flex;gap:0.5rem;align-items:center}
-.sort-select{padding:0.4rem 0.8rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.82rem;outline:none}
-.sort-select:focus{border-color:var(--accent)}
-.view-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);transition:all 0.2s}
-.view-btn:hover,.view-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+/* ─── Layout ─────────────────────────────────────────── */
+.layout{
+  display:flex;
+  max-width:1600px;
+  margin:0 auto;
+  min-height:calc(100vh - var(--header-h));
+}
 
-/* Game Grid */
-.grid{max-width:1400px;margin:0 auto;padding:0 2rem 3rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
-.grid.list-view{grid-template-columns:1fr}
-.grid.list-view .card{flex-direction:row;gap:1rem}
-.grid.list-view .card-body{flex:1}
-.grid.list-view .card-img{width:80px;min-height:60px;border-radius:8px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all 0.25s;display:flex;flex-direction:column;cursor:pointer;position:relative}
-.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow),0 0 20px var(--accent-glow)}
-.card-img{height:48px;background:linear-gradient(135deg,var(--surface2),var(--surface3));display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--text2);position:relative;overflow:hidden}
-.card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.3))}
-.card-body{padding:0.9rem;flex:1;display:flex;flex-direction:column;gap:0.4rem}
-.card-title{font-size:0.95rem;font-weight:600;color:#fff;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card-cat{font-size:0.75rem;color:var(--accent);font-weight:500}
-.card-desc{font-size:0.78rem;color:var(--text2);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card-meta{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:auto;padding-top:0.4rem}
-.card-tag{font-size:0.65rem;padding:0.15rem 0.4rem;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text2)}
-.card-footer{display:flex;gap:0.5rem;padding:0 0.9rem 0.9rem}
-.btn{padding:0.45rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600;border:none;transition:all 0.2s;flex:1;text-align:center}
-.btn-play{background:var(--accent);color:#fff}.btn-play:hover{background:var(--accent2)}
-.btn-blank{background:var(--surface2);color:var(--text);border:1px solid var(--border)}.btn-blank:hover{border-color:var(--accent);color:var(--accent)}
-.btn-size{font-size:0.7rem;color:var(--text2);padding:0.45rem 0.5rem;display:flex;align-items:center}
+/* ─── Sidebar ─────────────────────────────────────────── */
+.sidebar{
+  width:var(--sidebar-w);
+  flex-shrink:0;
+  padding:1.25rem 0.75rem;
+  position:sticky;
+  top:var(--header-h);
+  height:calc(100vh - var(--header-h));
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background:var(--surface);
+}
+.sidebar-title{
+  font-size:0.68rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--text3);
+  margin-bottom:0.6rem;
+  padding:0 0.4rem;
+}
+.cat-list{display:flex;flex-direction:column;gap:2px}
+.cat-item{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.5rem 0.7rem;
+  border-radius:var(--radius-sm);
+  border:1px solid transparent;
+  color:var(--text2);
+  font-size:0.84rem;
+  cursor:pointer;
+  transition:all var(--transition);
+  background:transparent;
+  text-align:left;
+  width:100%;
+}
+.cat-item:hover{background:var(--surface2);color:var(--text);border-color:var(--border)}
+.cat-item.active{background:var(--accent-glow);color:#fff;border-color:var(--accent);font-weight:600}
+.cat-item .cat-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
+.cat-item .cat-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-item .cat-count{
+  font-size:0.7rem;
+  color:var(--text3);
+  background:var(--surface3);
+  border-radius:12px;
+  padding:0.1rem 0.45rem;
+  flex-shrink:0;
+}
+.cat-item.active .cat-count{background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.7)}
 
-/* Game Player Modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;backdrop-filter:blur(4px);animation:fadeIn 0.2s}
-.modal-overlay.active{display:flex;align-items:center;justify-content:center}
-.modal{width:95vw;height:92vh;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 16px 64px rgba(0,0,0,0.6)}
-.modal-header{display:flex;align-items:center;padding:0.75rem 1rem;background:var(--surface2);border-bottom:1px solid var(--border);gap:0.75rem;min-height:48px}
-.modal-title{font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.modal-actions{display:flex;gap:0.5rem}
-.modal-btn{padding:0.4rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-size:0.8rem;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem}
-.modal-btn:hover{border-color:var(--accent);color:var(--text)}
-.modal-close{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:var(--red);border:none;border-radius:6px;color:#fff;font-size:1.2rem;font-weight:700}
-.modal-close:hover{background:#c0392b}
-.modal iframe{flex:1;border:none;background:#000;width:100%}
+/* ─── Main Content ─────────────────────────────────────── */
+.main{
+  flex:1;
+  min-width:0;
+  padding:1.25rem 1.25rem 3rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+
+/* Controls bar */
+.controls{
+  display:flex;align-items:center;
+  gap:0.75rem;flex-wrap:wrap;
+}
+.results-info{
+  font-size:0.82rem;color:var(--text2);
+  margin-right:auto;
+}
+.results-info b{color:var(--text)}
+.ctrl-group{display:flex;align-items:center;gap:0.4rem}
+.sort-select{
+  padding:0.42rem 0.75rem;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text);
+  font-size:0.8rem;
+  outline:none;
+  cursor:pointer;
+  transition:border-color var(--transition);
+}
+.sort-select:focus,.sort-select:hover{border-color:var(--border2)}
+.view-btn{
+  width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text2);
+  font-size:0.95rem;
+  transition:all var(--transition);
+}
+.view-btn:hover{border-color:var(--border2);color:var(--text)}
+.view-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ─── Game Grid ─────────────────────────────────────────── */
+.game-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:1rem;
+}
+.game-grid.view-list{
+  grid-template-columns:1fr;
+  gap:0.5rem;
+}
+
+/* Card */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform var(--transition),border-color var(--transition),box-shadow var(--transition);
+  cursor:pointer;
+  position:relative;
+}
+.card:hover{
+  border-color:var(--accent);
+  transform:translateY(-3px);
+  box-shadow:var(--shadow),0 0 24px var(--accent-glow);
+}
+.card:active{transform:translateY(-1px)}
+
+/* Card thumbnail area */
+.card-thumb{
+  height:120px;
+  background:linear-gradient(135deg,var(--surface2) 0%,var(--surface3) 100%);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  position:relative;
+  overflow:hidden;
+}
+.card-thumb-icon{
+  font-size:2.5rem;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  transition:transform 0.3s ease;
+}
+.card:hover .card-thumb-icon{transform:scale(1.1)}
+.card-thumb::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.35) 100%);
+}
+.card-cat-badge{
+  position:absolute;top:0.5rem;left:0.5rem;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:6px;
+  padding:0.2rem 0.5rem;
+  font-size:0.65rem;
+  color:#fff;
+  font-weight:600;
+  z-index:1;
+  white-space:nowrap;
+  max-width:calc(100% - 1rem);
+  overflow:hidden;text-overflow:ellipsis;
+}
+.card-size-badge{
+  position:absolute;bottom:0.5rem;right:0.5rem;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(6px);
+  border-radius:6px;
+  padding:0.15rem 0.4rem;
+  font-size:0.6rem;
+  color:rgba(255,255,255,0.6);
+  z-index:1;
+}
+
+/* Card body */
+.card-body{
+  padding:0.85rem;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:0.4rem;
+}
+.card-name{
+  font-size:0.9rem;
+  font-weight:700;
+  color:#fff;
+  line-height:1.3;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.card-desc{
+  font-size:0.74rem;
+  color:var(--text2);
+  line-height:1.4;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.card-tags{
+  display:flex;gap:0.35rem;flex-wrap:wrap;margin-top:auto;padding-top:0.3rem;
+}
+.tag{
+  font-size:0.62rem;
+  padding:0.15rem 0.4rem;
+  background:var(--surface3);
+  border:1px solid var(--border2);
+  border-radius:4px;
+  color:var(--text3);
+}
+
+/* Card actions */
+.card-actions{
+  display:flex;gap:0.5rem;
+  padding:0 0.85rem 0.85rem;
+}
+.btn{
+  flex:1;
+  padding:0.5rem 0.6rem;
+  border-radius:var(--radius-sm);
+  font-size:0.78rem;
+  font-weight:600;
+  text-align:center;
+  transition:all var(--transition);
+  display:flex;align-items:center;justify-content:center;gap:0.35rem;
+}
+.btn-play{
+  background:var(--accent);color:#fff;
+  box-shadow:0 2px 8px rgba(124,92,252,0.3);
+}
+.btn-play:hover{background:var(--accent2);box-shadow:0 4px 16px rgba(124,92,252,0.4)}
+.btn-stealth{
+  background:var(--surface2);color:var(--text2);
+  border:1px solid var(--border);
+  flex:0 0 auto;
+  padding:0.5rem 0.7rem;
+}
+.btn-stealth:hover{border-color:var(--border2);color:var(--text)}
+
+/* ─── List View Card ────────────────────────────────────── */
+.view-list .card{flex-direction:row;gap:0}
+.view-list .card-thumb{
+  width:90px;height:auto;min-height:70px;
+  flex-shrink:0;border-radius:0;
+}
+.view-list .card-thumb-icon{font-size:1.8rem}
+.view-list .card-body{
+  padding:0.65rem 0.85rem;
+  gap:0.25rem;
+}
+.view-list .card-name{font-size:0.88rem}
+.view-list .card-desc{-webkit-line-clamp:1}
+.view-list .card-tags{padding-top:0.2rem}
+.view-list .card-actions{
+  flex-direction:column;
+  padding:0.65rem 0.85rem 0.65rem 0;
+  gap:0.35rem;
+  justify-content:center;
+  flex-shrink:0;
+  width:auto;
+}
+.view-list .card-actions .btn{flex:0 0 auto;font-size:0.74rem}
+.view-list .card-cat-badge{top:0.4rem;left:0.4rem}
+.view-list .card-size-badge{bottom:0.4rem;right:0.4rem}
+
+/* ─── Player Modal ──────────────────────────────────────── */
+.overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.9);
+  z-index:500;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  animation:fadeIn 0.15s ease;
+}
+.overlay.open{display:flex;flex-direction:column}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* Empty State */
-.empty{text-align:center;padding:4rem 2rem;color:var(--text2)}
-.empty-icon{font-size:3rem;margin-bottom:1rem}
-.empty h3{color:var(--text);margin-bottom:0.5rem}
+/* Player bar */
+.player-bar{
+  display:flex;align-items:center;gap:0.75rem;
+  padding:0 1rem;
+  height:52px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.player-title{
+  flex:1;font-weight:700;font-size:0.95rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.player-cat{
+  font-size:0.75rem;color:var(--accent);font-weight:600;
+  white-space:nowrap;
+}
+.player-actions{display:flex;gap:0.4rem;flex-shrink:0}
+.pbar-btn{
+  display:flex;align-items:center;gap:0.35rem;
+  padding:0.38rem 0.7rem;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text2);
+  font-size:0.78rem;
+  transition:all var(--transition);
+}
+.pbar-btn:hover{border-color:var(--border2);color:var(--text)}
+.pbar-btn.danger{background:#2a1212;border-color:#5a2222;color:#ff6b6b}
+.pbar-btn.danger:hover{background:#e74c3c;border-color:#e74c3c;color:#fff}
+.pbar-btn svg{width:14px;height:14px;flex-shrink:0}
 
-/* Footer */
-.footer{text-align:center;padding:2rem;color:var(--text2);font-size:0.8rem;border-top:1px solid var(--border);margin-top:2rem}
+/* Iframe container */
+.player-frame-wrap{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:#000;
+  position:relative;
+}
+.player-frame-wrap iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  display:block;
+  background:#000;
+}
+
+/* Loading overlay inside iframe wrap */
+.frame-loading{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:1rem;
+  background:#000;
+  z-index:1;
+  pointer-events:none;
+  transition:opacity 0.3s;
+}
+.frame-loading.hidden{opacity:0;pointer-events:none}
+.spinner{
+  width:44px;height:44px;
+  border:3px solid var(--border);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.frame-loading p{font-size:0.88rem;color:var(--text2)}
+
+/* ─── Empty State ─────────────────────────────────────── */
+.empty-state{
+  grid-column:1/-1;
+  text-align:center;
+  padding:4rem 2rem;
+  color:var(--text2);
+}
+.empty-icon{font-size:3.5rem;margin-bottom:1rem;opacity:0.5}
+.empty-state h3{color:var(--text);font-size:1.2rem;margin-bottom:0.5rem}
+.empty-state p{font-size:0.88rem;margin-bottom:1.5rem}
+.empty-state .btn-reset{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.6rem 1.2rem;
+  background:var(--accent);color:#fff;
+  border-radius:var(--radius-sm);
+  font-size:0.85rem;font-weight:600;
+  transition:background var(--transition);
+}
+.empty-state .btn-reset:hover{background:var(--accent2)}
+
+/* ─── Load More ───────────────────────────────────────── */
+.load-more-wrap{
+  text-align:center;
+  padding:1.5rem 0;
+}
+.btn-load-more{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.65rem 1.5rem;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text2);
+  font-size:0.85rem;
+  font-weight:600;
+  transition:all var(--transition);
+}
+.btn-load-more:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ─── Scroll to top ───────────────────────────────────── */
+.scroll-top{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  width:42px;height:42px;
+  border-radius:50%;
+  background:var(--accent);color:#fff;
+  font-size:1rem;
+  box-shadow:var(--shadow);
+  transition:all var(--transition);
+  opacity:0;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  z-index:100;
+}
+.scroll-top.visible{opacity:1;pointer-events:auto}
+.scroll-top:hover{background:var(--accent2);transform:scale(1.1)}
+
+/* ─── Skeleton ─────────────────────────────────────────── */
+.skeleton-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  pointer-events:none;
+}
+.skel{
+  background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);
+  background-size:300% 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:4px;
+}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.skel-thumb{height:120px;border-radius:0}
+.skel-body{padding:0.85rem;display:flex;flex-direction:column;gap:0.5rem}
+.skel-line{height:12px}
+.skel-line.w60{width:60%}
+.skel-line.w80{width:80%}
+.skel-line.w40{width:40%}
+.skel-line.w100{width:100%}
+.skel-actions{height:34px;margin:0 0.85rem 0.85rem;border-radius:var(--radius-sm)}
+
+/* ─── Footer ─────────────────────────────────────────── */
+.footer{
+  text-align:center;
+  padding:2rem 1.25rem;
+  color:var(--text2);
+  font-size:0.78rem;
+  border-top:1px solid var(--border);
+  margin-top:auto;
+}
+.footer b{color:var(--text)}
 .footer a{color:var(--accent)}
+.footer-links{display:flex;justify-content:center;gap:1.5rem;margin-top:0.5rem;flex-wrap:wrap}
 
-/* Responsive */
+/* ─── Responsive ─────────────────────────────────────── */
+@media(max-width:1024px){
+  :root{--sidebar-w:200px}
+  .game-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+}
 @media(max-width:768px){
-.header-inner{flex-direction:column;align-items:stretch;gap:0.75rem}
-.header-stats{margin-left:0;justify-content:center}
-.grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-.search-section,.categories,.controls{padding:0 1rem}
-.grid{padding:0 1rem 3rem}
+  :root{--sidebar-w:0px}
+  .sidebar{display:none}
+  .layout{flex-direction:column}
+  .main{padding:1rem 0.75rem 3rem}
+  .game-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+  .header-inner{padding:0 0.85rem;gap:0.65rem}
+  .stat-pill:not(:first-child){display:none}
+  /* Mobile category chips above grid */
+  .mobile-cats{
+    display:flex;gap:0.4rem;overflow-x:auto;
+    padding:0 0.75rem;
+    scrollbar-width:none;
+  }
+  .mobile-cats::-webkit-scrollbar{display:none}
+  .mobile-cat-chip{
+    flex-shrink:0;
+    padding:0.38rem 0.75rem;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:20px;
+    font-size:0.78rem;
+    color:var(--text2);
+    cursor:pointer;
+    transition:all var(--transition);
+    white-space:nowrap;
+  }
+  .mobile-cat-chip.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .card-thumb{height:90px}
+  .card-thumb-icon{font-size:2rem}
 }
 @media(max-width:480px){
-.grid{grid-template-columns:1fr}
-.modal{width:100vw;height:100vh;border-radius:0}
+  .game-grid{grid-template-columns:1fr 1fr}
+  .overlay .player-bar{padding:0 0.65rem;gap:0.5rem}
+  .pbar-btn .pbar-label{display:none}
 }
-
-/* Loading skeleton */
-.skeleton{background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-/* Back to top */
-.back-top{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.2rem;box-shadow:var(--shadow);transition:all 0.3s;opacity:0;pointer-events:none;z-index:50;display:flex;align-items:center;justify-content:center}
-.back-top.visible{opacity:1;pointer-events:auto}
-.back-top:hover{background:var(--accent2);transform:scale(1.1)}
+@media(min-width:769px){
+  .mobile-cats{display:none !important}
+}
 </style>
 </head>
 <body>
 
-<!-- Header -->
+<!-- ═══ Header ═══════════════════════════════════════════ -->
 <header class="header">
-<div class="header-inner">
-<div class="logo">
-<div class="logo-icon">&#9733;</div>
-<span>NEBULA CDN</span>
-</div>
-<div class="header-stats">
-<div class="stat"><b id="total-count">...</b> Games</div>
-<div class="stat"><b id="total-size">...</b></div>
-<div class="stat"><b id="cat-count">...</b> Categories</div>
-</div>
-</div>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">&#10024;</div>
+      <span>NEBULA CDN</span>
+    </div>
+    <div class="header-search">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="search" placeholder="Search games, categories, tags…" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="search-clear" title="Clear search" aria-label="Clear">✕</button>
+    </div>
+    <div class="header-right">
+      <div class="stat-pill"><b id="h-total">…</b>&nbsp;games</div>
+      <div class="stat-pill"><b id="h-cats">…</b>&nbsp;categories</div>
+      <div class="stat-pill"><b id="h-size">…</b></div>
+    </div>
+  </div>
 </header>
 
-<!-- Search -->
-<section class="search-section">
-<div class="search-wrap">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-<input type="text" id="search" placeholder="Search 2790+ games... (e.g. Mario, Doom, Pokemon)" autocomplete="off" spellcheck="false">
-</div>
-<div class="search-hint">
-<span class="kbd">/</span> to focus &nbsp;|&nbsp; <span class="kbd">Esc</span> to close player &nbsp;|&nbsp; Search by name, category, or tag
-</div>
-</section>
+<!-- ═══ Mobile category chips ════════════════════════════ -->
+<div class="mobile-cats" id="mobile-cats"></div>
 
-<!-- Categories -->
-<div class="categories" id="categories"></div>
+<!-- ═══ Layout ═══════════════════════════════════════════ -->
+<div class="layout">
 
-<!-- Controls -->
-<div class="controls">
-<div class="results-count" id="results-count"></div>
-<div class="view-controls">
-<select class="sort-select" id="sort-select">
-<option value="name-asc">Name A-Z</option>
-<option value="name-desc">Name Z-A</option>
-<option value="size-desc">Largest First</option>
-<option value="size-asc">Smallest First</option>
-<option value="category">By Category</option>
-</select>
-<button class="view-btn active" id="grid-view-btn" title="Grid view" onclick="setView('grid')">&#9638;</button>
-<button class="view-btn" id="list-view-btn" title="List view" onclick="setView('list')">&#9776;</button>
-</div>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Categories</div>
+    <div class="cat-list" id="cat-list"></div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="results-info" id="results-info">Loading…</div>
+      <div class="ctrl-group">
+        <label for="sort-select" style="font-size:0.78rem;color:var(--text2)">Sort:</label>
+        <select class="sort-select" id="sort-select">
+          <option value="name-asc">Name A → Z</option>
+          <option value="name-desc">Name Z → A</option>
+          <option value="size-desc">Largest First</option>
+          <option value="size-asc">Smallest First</option>
+          <option value="category">By Category</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <button class="view-btn active" id="btn-grid" title="Grid view" onclick="setView('grid')">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+            <rect x="0" y="0" width="6" height="6" rx="1"/><rect x="10" y="0" width="6" height="6" rx="1"/>
+            <rect x="0" y="10" width="6" height="6" rx="1"/><rect x="10" y="10" width="6" height="6" rx="1"/>
+          </svg>
+        </button>
+        <button class="view-btn" id="btn-list" title="List view" onclick="setView('list')">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+            <rect x="0" y="1" width="16" height="3" rx="1.5"/><rect x="0" y="6.5" width="16" height="3" rx="1.5"/>
+            <rect x="0" y="12" width="16" height="3" rx="1.5"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Game grid -->
+    <div class="game-grid" id="game-grid"></div>
+
+    <!-- Load more -->
+    <div class="load-more-wrap" id="load-more-wrap" style="display:none">
+      <button class="btn-load-more" id="btn-load-more">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+        Load More Games
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div><b>NEBULA CDN</b> by <a href="https://github.com/GoatTech-42" target="_blank" rel="noopener">GoatTech Industries</a></div>
+      <div class="footer-links">
+        <a href="https://github.com/GoatTech-42/NEBULA-CDN" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://cdn.jsdelivr.net/gh/GoatTech-42/NEBULA-CDN@main/games.json" target="_blank" rel="noopener">games.json API</a>
+        <a href="https://www.jsdelivr.com/" target="_blank" rel="noopener">jsDelivr CDN</a>
+      </div>
+    </footer>
+
+  </main>
 </div>
 
-<!-- Game Grid -->
-<div class="grid" id="game-grid"></div>
-
-<!-- Empty State -->
-<div class="empty" id="empty-state" style="display:none">
-<div class="empty-icon">&#128270;</div>
-<h3>No games found</h3>
-<p>Try a different search term or category.</p>
+<!-- ═══ Game Player Overlay ═══════════════════════════════ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Game player">
+  <div class="player-bar">
+    <div class="player-title" id="player-title">Loading…</div>
+    <div class="player-cat" id="player-cat"></div>
+    <div class="player-actions">
+      <button class="pbar-btn" id="btn-fullscreen" title="Fullscreen (F11)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+        <span class="pbar-label">Fullscreen</span>
+      </button>
+      <button class="pbar-btn" id="btn-new-tab" title="Open in new tab">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        <span class="pbar-label">New Tab</span>
+      </button>
+      <button class="pbar-btn" id="btn-stealth" title="Open in stealth tab (about:blank)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+          <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        </svg>
+        <span class="pbar-label">Stealth</span>
+      </button>
+      <button class="pbar-btn danger" id="btn-close" title="Close (Esc)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+        <span class="pbar-label">Close</span>
+      </button>
+    </div>
+  </div>
+  <div class="player-frame-wrap">
+    <div class="frame-loading" id="frame-loading">
+      <div class="spinner"></div>
+      <p id="frame-loading-text">Loading game…</p>
+    </div>
+    <iframe
+      id="game-frame"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock"
+      allowfullscreen
+      allow="fullscreen"
+    ></iframe>
+  </div>
 </div>
 
-<!-- Game Player Modal -->
-<div class="modal-overlay" id="modal">
-<div class="modal">
-<div class="modal-header">
-<div class="modal-title" id="modal-title">Loading...</div>
-<div class="modal-actions">
-<button class="modal-btn" id="btn-about-blank" title="Open in about:blank (stealth mode)">
-&#128279; Stealth Tab
-</button>
-<button class="modal-btn" id="btn-fullscreen" title="Fullscreen">
-&#x26F6; Fullscreen
-</button>
-<button class="modal-btn" id="btn-new-tab" title="Open in new tab">
-&#8599; New Tab
-</button>
-</div>
-<button class="modal-close" id="modal-close">&times;</button>
-</div>
-<iframe id="game-frame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" allowfullscreen></iframe>
-</div>
-</div>
-
-<!-- Back to top -->
-<button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
-
-<!-- Footer -->
-<footer class="footer">
-<p><strong>NEBULA CDN</strong> by <a href="https://github.com/GoatTech-42" target="_blank">GoatTech Industries</a></p>
-<p style="margin-top:0.3rem">Served via <a href="https://www.jsdelivr.com/" target="_blank">jsDelivr</a> &bull; 
-<a href="https://github.com/GoatTech-42/NEBULA-CDN" target="_blank">GitHub</a> &bull;
-<a href="https://cdn.jsdelivr.net/gh/GoatTech-42/NEBULA-CDN@main/games.json" target="_blank">API (games.json)</a></p>
-</footer>
+<!-- Scroll to top -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <script>
-(function(){
+(function () {
 'use strict';
 
-const CDN_BASE = 'https://cdn.jsdelivr.net/gh/GoatTech-42/NEBULA-CDN@main';
-const CATALOG_URL = CDN_BASE + '/games.json';
+/* ─── Config ───────────────────────────────────────── */
+const CDN_BASE   = 'https://cdn.jsdelivr.net/gh/GoatTech-42/NEBULA-CDN@main';
+const LOCAL_JSON = 'games.json';
+const PAGE_SIZE  = 60;
 
-// Category emoji map
-const CAT_ICONS = {
-  'Minecraft':'&#9935;','Sonic':'&#9889;','Mario':'&#127812;','Pokemon':'&#9889;',
-  'Zelda':'&#128737;','Fighting':'&#129354;','Shooter':'&#127919;','Racing':'&#127950;',
-  'Sports':'&#9917;','Platformer':'&#127939;','Puzzle':'&#129513;','RPG':'&#9876;',
-  'Strategy':'&#9813;','Horror':'&#128123;','Simulation':'&#127959;','Other':'&#127918;'
+/* ─── Category icons & colours ─────────────────────── */
+const CAT_META = {
+  'All':        { icon: '🎮', color: '#7c5cfc' },
+  'Action':     { icon: '💥', color: '#e74c3c' },
+  'Fighting':   { icon: '🥊', color: '#e67e22' },
+  'Horror':     { icon: '👻', color: '#8e44ad' },
+  'Mario':      { icon: '🍄', color: '#e74c3c' },
+  'Minecraft':  { icon: '⛏️',  color: '#27ae60' },
+  'Other':      { icon: '🎲', color: '#7f8c8d' },
+  'Platformer': { icon: '🏃', color: '#2980b9' },
+  'Pokemon':    { icon: '⚡', color: '#f1c40f' },
+  'Puzzle':     { icon: '🧩', color: '#16a085' },
+  'RPG':        { icon: '⚔️',  color: '#8e44ad' },
+  'Racing':     { icon: '🏎️',  color: '#e74c3c' },
+  'Retro':      { icon: '👾', color: '#2980b9' },
+  'Shooter':    { icon: '🎯', color: '#c0392b' },
+  'Simulation': { icon: '🏗️',  color: '#27ae60' },
+  'Sonic':      { icon: '💨', color: '#2980b9' },
+  'Sports':     { icon: '⚽', color: '#27ae60' },
+  'Strategy':   { icon: '♟️',  color: '#8e44ad' },
+  'Zelda':      { icon: '🗡️',  color: '#27ae60' },
 };
+function catIcon(cat) { return (CAT_META[cat] || CAT_META['Other']).icon; }
 
-let allGames = [];
-let filtered = [];
-let currentCategory = 'All';
-let currentView = 'grid';
-let currentGame = null;
-const PAGE_SIZE = 60;
-let displayedCount = 0;
+/* ─── State ─────────────────────────────────────────── */
+let allGames      = [];
+let filtered      = [];
+let currentCat    = 'All';
+let currentView   = 'grid';
+let currentGame   = null;
+let displayedN    = 0;
 
-// ─── Fetch catalog ───
+/* ─── Helpers ───────────────────────────────────────── */
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtSize(b) {
+  if (b >= 1048576) return (b/1048576).toFixed(1)+' MB';
+  if (b >= 1024)    return (b/1024).toFixed(0)+' KB';
+  return b+' B';
+}
+function gameUrl(game) {
+  return CDN_BASE + '/' + game.file;
+}
+
+/* ─── Load catalog ──────────────────────────────────── */
 async function init() {
+  showSkeletons();
   try {
-    // Try fetching from jsDelivr first, fallback to local
     let data;
     try {
-      const res = await fetch(CATALOG_URL);
-      if (!res.ok) throw new Error('CDN fetch failed');
-      data = await res.json();
+      const r = await fetch(CDN_BASE + '/games.json');
+      if (!r.ok) throw new Error('CDN unreachable');
+      data = await r.json();
     } catch {
-      const res = await fetch('games.json');
-      data = await res.json();
+      const r = await fetch(LOCAL_JSON);
+      if (!r.ok) throw new Error('games.json not found');
+      data = await r.json();
     }
-    
-    allGames = data.games || [];
-    document.getElementById('total-count').textContent = data.stats.totalGames.toLocaleString();
-    document.getElementById('total-size').textContent = data.stats.totalSizeMB + ' MB';
-    document.getElementById('cat-count').textContent = data.categories.length;
-    
-    buildCategories(data.stats.categories, data.categories);
+
+    allGames = (data.games || []).slice().sort((a,b)=>a.name.localeCompare(b.name));
+
+    const stats = data.stats || {};
+    document.getElementById('h-total').textContent = (stats.totalGames||allGames.length).toLocaleString();
+    document.getElementById('h-cats').textContent  = (data.categories||[]).length;
+    document.getElementById('h-size').textContent  = (stats.totalSizeMB||'?')+' MB';
+
+    buildSidebar(stats.categories || {}, data.categories || []);
     filtered = [...allGames];
-    displayedCount = 0;
-    renderGames();
+    displayedN = 0;
+    renderGrid(true);
   } catch (err) {
-    document.getElementById('game-grid').innerHTML = '<div class="empty"><div class="empty-icon">&#9888;</div><h3>Failed to load catalog</h3><p>' + err.message + '</p></div>';
+    document.getElementById('game-grid').innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon">⚠️</div>
+        <h3>Failed to Load Catalog</h3>
+        <p>${esc(err.message)}</p>
+      </div>`;
+    document.getElementById('results-info').textContent = 'Error loading games';
   }
 }
 
-// ─── Build category buttons ───
-function buildCategories(counts, cats) {
-  const container = document.getElementById('categories');
-  const total = Object.values(counts).reduce((a, b) => a + b, 0);
-  let html = `<button class="cat-btn active" onclick="filterCategory('All')">All <span class="count">${total}</span></button>`;
-  // Sort categories by count descending
-  const sorted = cats.sort((a, b) => (counts[b] || 0) - (counts[a] || 0));
+/* ─── Skeletons ─────────────────────────────────────── */
+function showSkeletons() {
+  const grid = document.getElementById('game-grid');
+  let html = '';
+  for (let i = 0; i < 12; i++) {
+    html += `<div class="skeleton-card">
+      <div class="skel skel-thumb"></div>
+      <div class="skel-body">
+        <div class="skel skel-line w80"></div>
+        <div class="skel skel-line w60"></div>
+        <div class="skel skel-line w100"></div>
+        <div class="skel skel-line w40"></div>
+      </div>
+      <div class="skel skel-actions"></div>
+    </div>`;
+  }
+  grid.innerHTML = html;
+}
+
+/* ─── Build sidebar ─────────────────────────────────── */
+function buildSidebar(counts, cats) {
+  /* Sort: by count desc, but put 'Other' at bottom always */
+  const sorted = [...cats].sort((a,b) => {
+    if (a === 'Other') return 1;
+    if (b === 'Other') return -1;
+    return (counts[b]||0) - (counts[a]||0);
+  });
+
+  const totalCount = Object.values(counts).reduce((s,v)=>s+v, 0);
+
+  function itemHtml(cat, count, isAll) {
+    const icon = catIcon(cat);
+    const name = cat;
+    return `<button class="cat-item${isAll?' active':''}" data-cat="${esc(cat)}" onclick="selectCat('${esc(cat)}')">
+      <span class="cat-icon">${icon}</span>
+      <span class="cat-name">${esc(name)}</span>
+      <span class="cat-count">${count.toLocaleString()}</span>
+    </button>`;
+  }
+
+  let html = itemHtml('All', totalCount, true);
   for (const cat of sorted) {
-    const icon = CAT_ICONS[cat] || '&#127918;';
-    html += `<button class="cat-btn" data-cat="${cat}" onclick="filterCategory('${cat}')">${icon} ${cat} <span class="count">${counts[cat] || 0}</span></button>`;
+    if (counts[cat] > 0) html += itemHtml(cat, counts[cat], false);
   }
-  container.innerHTML = html;
+
+  document.getElementById('cat-list').innerHTML = html;
+
+  /* Mobile chips */
+  let mHtml = `<button class="mobile-cat-chip active" data-cat="All" onclick="selectCat('All')">🎮 All</button>`;
+  for (const cat of sorted) {
+    if (counts[cat] > 0) {
+      mHtml += `<button class="mobile-cat-chip" data-cat="${esc(cat)}" onclick="selectCat('${esc(cat)}')">${catIcon(cat)} ${esc(cat)}</button>`;
+    }
+  }
+  document.getElementById('mobile-cats').innerHTML = mHtml;
 }
 
-// ─── Filter by category ───
-window.filterCategory = function(cat) {
-  currentCategory = cat;
-  document.querySelectorAll('.cat-btn').forEach(b => {
-    b.classList.toggle('active', b.textContent.includes(cat) || (cat === 'All' && b.textContent.startsWith('All')));
+/* ─── Select category ───────────────────────────────── */
+window.selectCat = function(cat) {
+  currentCat = cat;
+  /* Update sidebar */
+  document.querySelectorAll('.cat-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.cat === cat);
+  });
+  /* Update mobile chips */
+  document.querySelectorAll('.mobile-cat-chip').forEach(el => {
+    el.classList.toggle('active', el.dataset.cat === cat);
   });
   applyFilters();
 };
 
-// ─── Search and filter ───
+/* ─── Filter + sort ─────────────────────────────────── */
 function applyFilters() {
-  const query = document.getElementById('search').value.toLowerCase().trim();
-  
+  const q = document.getElementById('search').value.toLowerCase().trim();
+
   filtered = allGames.filter(g => {
-    // Category filter
-    if (currentCategory !== 'All' && g.category !== currentCategory) return false;
-    // Search filter
-    if (query) {
-      const searchable = (g.name + ' ' + g.category + ' ' + g.slug + ' ' + (g.tags || []).join(' ')).toLowerCase();
-      // Support multi-word search
-      const words = query.split(/\s+/);
-      return words.every(w => searchable.includes(w));
+    if (currentCat !== 'All' && g.category !== currentCat) return false;
+    if (q) {
+      const blob = (g.name + ' ' + g.category + ' ' + g.slug + ' ' + (g.tags||[]).join(' ')).toLowerCase();
+      return q.split(/\s+/).every(w => blob.includes(w));
     }
     return true;
   });
-  
-  applySorting();
-  displayedCount = 0;
-  renderGames();
+
+  applySort();
+  displayedN = 0;
+  renderGrid(true);
 }
 
-// ─── Sort games ───
-function applySorting() {
-  const sort = document.getElementById('sort-select').value;
-  switch (sort) {
-    case 'name-asc': filtered.sort((a, b) => a.name.localeCompare(b.name)); break;
-    case 'name-desc': filtered.sort((a, b) => b.name.localeCompare(a.name)); break;
-    case 'size-desc': filtered.sort((a, b) => b.size - a.size); break;
-    case 'size-asc': filtered.sort((a, b) => a.size - b.size); break;
-    case 'category': filtered.sort((a, b) => a.category.localeCompare(b.category) || a.name.localeCompare(b.name)); break;
+function applySort() {
+  const s = document.getElementById('sort-select').value;
+  switch(s) {
+    case 'name-asc':  filtered.sort((a,b)=>a.name.localeCompare(b.name)); break;
+    case 'name-desc': filtered.sort((a,b)=>b.name.localeCompare(a.name)); break;
+    case 'size-desc': filtered.sort((a,b)=>b.size - a.size); break;
+    case 'size-asc':  filtered.sort((a,b)=>a.size - b.size); break;
+    case 'category':  filtered.sort((a,b)=>a.category.localeCompare(b.category)||a.name.localeCompare(b.name)); break;
   }
 }
 
-// ─── Render games (virtual scroll / lazy load) ───
-function renderGames() {
-  const grid = document.getElementById('game-grid');
-  const empty = document.getElementById('empty-state');
-  const count = document.getElementById('results-count');
-  
-  count.innerHTML = `Showing <b>${Math.min(displayedCount + PAGE_SIZE, filtered.length)}</b> of <b>${filtered.length}</b> games`;
-  
+/* ─── Render grid ───────────────────────────────────── */
+function renderGrid(reset) {
+  const grid   = document.getElementById('game-grid');
+  const info   = document.getElementById('results-info');
+  const moreWr = document.getElementById('load-more-wrap');
+
+  if (reset) { grid.innerHTML = ''; displayedN = 0; }
+
   if (filtered.length === 0) {
-    grid.innerHTML = '';
-    empty.style.display = 'block';
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No Games Found</h3>
+        <p>Try a different search or category.</p>
+        <button class="btn-reset" onclick="resetSearch()">Clear Search</button>
+      </div>`;
+    info.innerHTML = 'No games found';
+    moreWr.style.display = 'none';
     return;
   }
-  empty.style.display = 'none';
-  
-  if (displayedCount === 0) grid.innerHTML = '';
-  
-  const end = Math.min(displayedCount + PAGE_SIZE, filtered.length);
-  const fragment = document.createDocumentFragment();
-  
-  for (let i = displayedCount; i < end; i++) {
-    const g = filtered[i];
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.dataset.slug = g.slug;
-    const sizeStr = g.size > 1048576 ? (g.size / 1048576).toFixed(1) + ' MB' : (g.size / 1024).toFixed(0) + ' KB';
-    const icon = CAT_ICONS[g.category] || '&#127918;';
-    const tagsHtml = (g.tags || []).slice(0, 4).map(t => `<span class="card-tag">${t}</span>`).join('');
-    
-    card.innerHTML = `
-      <div class="card-img">${icon}</div>
-      <div class="card-body">
-        <div class="card-title" title="${escHtml(g.name)}">${escHtml(g.name)}</div>
-        <div class="card-cat">${icon} ${g.category}</div>
-        <div class="card-desc">${escHtml(g.description)}</div>
-        <div class="card-meta">${tagsHtml}</div>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-play" onclick="playGame('${g.slug}',event)">&#9654; Play</button>
-        <button class="btn btn-blank" onclick="openAboutBlank('${g.slug}',event)" title="Open in stealth tab">&#128279; Stealth</button>
-        <span class="btn-size">${sizeStr}</span>
-      </div>`;
-    fragment.appendChild(card);
+
+  const end = Math.min(displayedN + PAGE_SIZE, filtered.length);
+  const frag = document.createDocumentFragment();
+
+  for (let i = displayedN; i < end; i++) {
+    frag.appendChild(buildCard(filtered[i]));
   }
-  
-  grid.appendChild(fragment);
-  displayedCount = end;
-  count.innerHTML = `Showing <b>${displayedCount}</b> of <b>${filtered.length}</b> games`;
+  grid.appendChild(frag);
+  displayedN = end;
+
+  info.innerHTML = `Showing <b>${displayedN.toLocaleString()}</b> of <b>${filtered.length.toLocaleString()}</b> games`;
+  moreWr.style.display = (displayedN < filtered.length) ? 'block' : 'none';
 }
 
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* ─── Build a single card ───────────────────────────── */
+function buildCard(g) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.setAttribute('role', 'article');
+  card.setAttribute('aria-label', g.name);
+  card.dataset.slug = g.slug;
+
+  const icon    = catIcon(g.category);
+  const sizeStr = fmtSize(g.size);
+  const tags    = (g.tags||[]).slice(0,3).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+
+  card.innerHTML = `
+    <div class="card-thumb">
+      <div class="card-thumb-icon" aria-hidden="true">${icon}</div>
+      <div class="card-cat-badge">${esc(g.category)}</div>
+      <div class="card-size-badge">${sizeStr}</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name" title="${esc(g.name)}">${esc(g.name)}</div>
+      <div class="card-desc">${esc(g.description)}</div>
+      <div class="card-tags">${tags}</div>
+    </div>
+    <div class="card-actions">
+      <button class="btn btn-play" onclick="playGame('${esc(g.slug)}',event)">
+        ▶ Play
+      </button>
+      <button class="btn btn-stealth" onclick="stealthGame('${esc(g.slug)}',event)" title="Open in stealth tab">
+        🔗
+      </button>
+    </div>`;
+
+  return card;
 }
 
-// ─── Format file size ───
-function fmtSize(bytes) {
-  if (bytes > 1048576) return (bytes / 1048576).toFixed(1) + ' MB';
-  return (bytes / 1024).toFixed(0) + ' KB';
-}
+window.resetSearch = function() {
+  document.getElementById('search').value = '';
+  document.getElementById('search-clear').classList.remove('visible');
+  selectCat('All');
+};
 
-// ─── Get game CDN URL ───
-function getGameUrl(slug) {
-  const game = allGames.find(g => g.slug === slug);
-  if (!game) return null;
-  return CDN_BASE + '/' + game.file;
-}
+/* ─── View toggle ───────────────────────────────────── */
+window.setView = function(v) {
+  currentView = v;
+  document.getElementById('game-grid').classList.toggle('view-list', v === 'list');
+  document.getElementById('btn-grid').classList.toggle('active', v === 'grid');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+};
 
-// ─── Play in modal ───
+/* ─── Play game ─────────────────────────────────────── */
 window.playGame = function(slug, event) {
-  if (event) event.stopPropagation();
+  if (event) { event.stopPropagation(); event.preventDefault(); }
   const game = allGames.find(g => g.slug === slug);
   if (!game) return;
   currentGame = game;
-  
-  const url = getGameUrl(slug);
-  document.getElementById('modal-title').textContent = game.name + ' - ' + game.category;
-  document.getElementById('game-frame').src = url;
-  document.getElementById('modal').classList.add('active');
+
+  document.getElementById('player-title').textContent = game.name;
+  document.getElementById('player-cat').textContent   = game.category;
+
+  /* Show loading state */
+  const loading = document.getElementById('frame-loading');
+  const loadTxt = document.getElementById('frame-loading-text');
+  loading.classList.remove('hidden');
+  loadTxt.textContent = `Loading ${game.name}…`;
+
+  const frame = document.getElementById('game-frame');
+  frame.src = '';
+  frame.onload = () => { loading.classList.add('hidden'); };
+  frame.onerror = () => {
+    loadTxt.textContent = 'Failed to load game.';
+  };
+
+  /* Small delay so overlay animation plays first */
+  setTimeout(() => { frame.src = gameUrl(game); }, 80);
+
+  document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 };
 
-// ─── Open in about:blank (stealth) ───
-window.openAboutBlank = function(slug, event) {
-  if (event) event.stopPropagation();
+/* ─── Stealth tab ───────────────────────────────────── */
+window.stealthGame = function(slug, event) {
+  if (event) { event.stopPropagation(); event.preventDefault(); }
   const game = allGames.find(g => g.slug === slug);
   if (!game) return;
-  
-  const url = getGameUrl(slug);
+
+  const url = gameUrl(game);
   const win = window.open('about:blank', '_blank');
-  if (!win) { alert('Pop-up blocked! Please allow pop-ups for this site.'); return; }
-  
+  if (!win) { alert('Popup blocked — please allow popups for this site.'); return; }
   win.document.open();
-  win.document.write(`<!DOCTYPE html><html><head><title>${escHtml(game.name)}</title><style>*{margin:0;padding:0}html,body{height:100%;overflow:hidden}iframe{width:100%;height:100%;border:none}</style></head><body><iframe src="${escHtml(url)}" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" allowfullscreen></iframe></body></html>`);
+  win.document.write(
+    `<!DOCTYPE html><html><head><title>${esc(game.name)}</title>`+
+    `<style>*{margin:0;padding:0}html,body{width:100%;height:100%;overflow:hidden;background:#000}`+
+    `iframe{width:100%;height:100%;border:none}</style></head>`+
+    `<body><iframe src="${esc(url)}" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" allowfullscreen></iframe></body></html>`
+  );
   win.document.close();
 };
 
-// ─── Close modal ───
-function closeModal() {
-  document.getElementById('modal').classList.remove('active');
+/* ─── Close modal ───────────────────────────────────── */
+function closePlayer() {
+  document.getElementById('overlay').classList.remove('open');
   document.getElementById('game-frame').src = '';
+  document.getElementById('frame-loading').classList.remove('hidden');
   document.body.style.overflow = '';
   currentGame = null;
 }
-document.getElementById('modal-close').onclick = closeModal;
-document.getElementById('modal').onclick = function(e) {
-  if (e.target === this) closeModal();
-};
 
-// ─── Modal actions ───
-document.getElementById('btn-about-blank').onclick = function() {
-  if (currentGame) openAboutBlank(currentGame.slug);
-};
+/* ─── Player bar buttons ────────────────────────────── */
+document.getElementById('btn-close').onclick = closePlayer;
+document.getElementById('overlay').addEventListener('click', function(e){
+  if (e.target === this) closePlayer();
+});
+
 document.getElementById('btn-fullscreen').onclick = function() {
   const frame = document.getElementById('game-frame');
-  if (frame.requestFullscreen) frame.requestFullscreen();
-  else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
+  const req   = frame.requestFullscreen || frame.webkitRequestFullscreen || frame.mozRequestFullScreen;
+  if (req) req.call(frame);
 };
+
 document.getElementById('btn-new-tab').onclick = function() {
-  if (currentGame) window.open(getGameUrl(currentGame.slug), '_blank');
+  if (currentGame) window.open(gameUrl(currentGame), '_blank');
 };
 
-// ─── View toggle ───
-window.setView = function(view) {
-  currentView = view;
-  const grid = document.getElementById('game-grid');
-  grid.classList.toggle('list-view', view === 'list');
-  document.getElementById('grid-view-btn').classList.toggle('active', view === 'grid');
-  document.getElementById('list-view-btn').classList.toggle('active', view === 'list');
+document.getElementById('btn-stealth').onclick = function() {
+  if (currentGame) stealthGame(currentGame.slug);
 };
 
-// ─── Event listeners ───
-let searchTimeout;
-document.getElementById('search').addEventListener('input', function() {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(applyFilters, 200);
+/* ─── Search ────────────────────────────────────────── */
+let searchTimer;
+const searchInput = document.getElementById('search');
+const searchClear = document.getElementById('search-clear');
+
+searchInput.addEventListener('input', function() {
+  const hasVal = this.value.length > 0;
+  searchClear.classList.toggle('visible', hasVal);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(applyFilters, 180);
 });
 
+searchClear.onclick = function() {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  applyFilters();
+  searchInput.focus();
+};
+
+/* ─── Sort ──────────────────────────────────────────── */
 document.getElementById('sort-select').addEventListener('change', function() {
-  applySorting();
-  displayedCount = 0;
-  renderGames();
+  applySort();
+  displayedN = 0;
+  renderGrid(true);
 });
 
-// Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-  if (e.key === '/' && document.activeElement !== document.getElementById('search')) {
-    e.preventDefault();
-    document.getElementById('search').focus();
-  }
-  if (e.key === 'Escape') {
-    if (document.getElementById('modal').classList.contains('active')) {
-      closeModal();
-    } else {
-      document.getElementById('search').blur();
-    }
-  }
-});
+/* ─── Load more ─────────────────────────────────────── */
+document.getElementById('btn-load-more').onclick = function() {
+  renderGrid(false);
+};
 
-// Infinite scroll
-let scrollThrottle = false;
+/* ─── Infinite scroll ───────────────────────────────── */
+let scrollRaf = false;
 window.addEventListener('scroll', function() {
-  if (scrollThrottle) return;
-  scrollThrottle = true;
+  if (scrollRaf) return;
+  scrollRaf = true;
   requestAnimationFrame(function() {
-    // Back to top button
-    document.getElementById('back-top').classList.toggle('visible', window.scrollY > 500);
-    // Lazy load more games
-    if (displayedCount < filtered.length && window.innerHeight + window.scrollY >= document.body.offsetHeight - 600) {
-      renderGames();
+    const scrolled = window.scrollY;
+    /* Back to top */
+    document.getElementById('scroll-top').classList.toggle('visible', scrolled > 600);
+    /* Auto-load more */
+    if (displayedN < filtered.length) {
+      const nearBottom = window.innerHeight + scrolled >= document.body.scrollHeight - 800;
+      if (nearBottom) renderGrid(false);
     }
-    scrollThrottle = false;
+    scrollRaf = false;
   });
+}, { passive: true });
+
+/* ─── Keyboard shortcuts ────────────────────────────── */
+document.addEventListener('keydown', function(e) {
+  const overlay = document.getElementById('overlay');
+  /* Esc: close player or blur search */
+  if (e.key === 'Escape') {
+    if (overlay.classList.contains('open')) { closePlayer(); return; }
+    searchInput.blur();
+    return;
+  }
+  /* /: focus search */
+  if (e.key === '/' && document.activeElement !== searchInput && !overlay.classList.contains('open')) {
+    e.preventDefault();
+    searchInput.focus();
+    return;
+  }
+  /* F: fullscreen while playing */
+  if ((e.key === 'f' || e.key === 'F') && overlay.classList.contains('open') && document.activeElement !== searchInput) {
+    document.getElementById('btn-fullscreen').click();
+  }
 });
 
-// ─── Init ───
+/* ─── Boot ──────────────────────────────────────────── */
 init();
 
 })();

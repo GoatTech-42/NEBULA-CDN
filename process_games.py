@@ -40,6 +40,7 @@ CATEGORY_RULES = {
 
 
 def clean_game_name(filename):
+    """Strip file extension and produce a raw name; slugify + title_from_slug does the rest."""
     name = filename
     name = re.sub(r'\.(html|htm|txt|docx)$', '', name)
     if len(name) > 2 and name[:2] == 'cl' and (name[2:3].isupper() or name[2:3].isdigit() or name[2:3].isalpha()):
@@ -53,6 +54,44 @@ def clean_game_name(filename):
     if not name:
         name = filename.replace('.html', '')
     return name
+
+
+def title_from_slug(slug):
+    """
+    Convert a slug into a proper Title Case display name.
+    Uses dash word boundaries and number/letter splits within segments.
+    Articles (a, an, the, of, …) are kept lowercase unless they are the first word.
+    """
+    ARTICLES = {'a', 'an', 'the', 'and', 'or', 'but', 'of', 'in', 'on', 'at',
+                'to', 'for', 'with', 'by', 'from', 'vs'}
+
+    dash_parts = slug.split('-')
+    all_words = []
+
+    for part in dash_parts:
+        if not part:
+            continue
+        sub = part
+        # "boxing2" -> "boxing 2"
+        sub = re.sub(r'([a-zA-Z]{2,})(\d+)', r'\1 \2', sub)
+        # "2doom" -> "2 doom"
+        sub = re.sub(r'(\d+)([a-zA-Z]{2,})', r'\1 \2', sub)
+        for w in sub.split():
+            if w:
+                all_words.append(w)
+
+    if not all_words:
+        return slug.capitalize()
+
+    result = []
+    for i, word in enumerate(all_words):
+        w_lower = word.lower()
+        if i == 0 or w_lower not in ARTICLES:
+            result.append(word[0].upper() + word[1:].lower())
+        else:
+            result.append(w_lower)
+
+    return ' '.join(result)
 
 
 def slugify(name):
@@ -185,6 +224,9 @@ def main():
             del content
             gc.collect()
             
+            # Use slug-derived Title Case name
+            display_name = title_from_slug(new_slug)
+            
             # Add header
             header = (
                 f"<!-- NEBULA CDN | GoatTech Industries | "
@@ -251,7 +293,7 @@ def main():
     
     # Phase 4: Write catalog
     print("\n[Phase 4] Writing catalog...")
-    catalog.sort(key=lambda x: x["name"].lower())
+    catalog.sort(key=lambda x: x["name"].lower().lstrip('0123456789 '))
     
     cat_counts = Counter(g["category"] for g in catalog)
     total_size = sum(g["size"] for g in catalog)
