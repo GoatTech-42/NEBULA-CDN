@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NEBULA CDN Game Catalog",
+  "description": "Schema for the NEBULA CDN games.json catalog file",
+  "type": "object",
+  "required": ["name", "version", "stats", "categories", "games"],
+  "properties": {
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "version": { "type": "string" },
+    "author": { "type": "string" },
+    "repository": { "type": "string", "format": "uri" },
+    "cdn_base": { "type": "string", "format": "uri" },
+    "license": { "type": "string" },
+    "generated": { "type": "string", "format": "date-time" },
+    "stats": {
+      "type": "object",
+      "required": ["totalGames", "totalSizeBytes", "totalSizeMB", "categories"],
+      "properties": {
+        "totalGames": { "type": "integer", "minimum": 0 },
+        "totalSizeBytes": { "type": "integer", "minimum": 0 },
+        "totalSizeMB": { "type": "number", "minimum": 0 },
+        "categories": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "games": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "slug", "file", "filename", "category", "tags", "description", "size", "hash"],
+        "properties": {
+          "id": { "type": "string", "description": "Unique game identifier" },
+          "name": { "type": "string", "description": "Human-readable display name" },
+          "slug": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "URL-safe slug" },
+          "file": { "type": "string", "description": "Relative path to game file" },
+          "filename": { "type": "string", "description": "Filename only" },
+          "category": { "type": "string", "description": "Primary category" },
+          "tags": { "type": "array", "items": { "type": "string" }, "description": "Tag list" },
+          "description": { "type": "string", "description": "Short description" },
+          "size": { "type": "integer", "minimum": 0, "description": "File size in bytes" },
+          "originalSize": { "type": "integer", "minimum": 0, "description": "Original size before processing" },
+          "hash": { "type": "string", "minLength": 16, "maxLength": 16, "description": "SHA-256 hash prefix" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+<!-- NEBULA CDN | GoatTech Industries | Game: zdoom | File: zdoom.html | https://github.com/GoatTech-42/NEBULA-CDN -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script><script type="text/javascript">
+function $_GET(param) {
+var vars = {};
+window.location.href.replace(location.hash, '').replace(
+/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+function(m, key, value) { // callback
+vars[key] = value !== undefined ? value : '';
+}
+);
+if (param) {
+return vars[param] ? vars[param] : null;
+}
+return vars;
+}
+var softs = {
+NAME: {
+file: 'softs/zdoom.zip',
+cmd: 'echo enter zdoom doom to launch doom 1, enter zdoom chex to launch chex quest 3',
+pointer: true
+},
+}
+var file = "NAME";
+if ($_GET('soft') != null) {
+if (softs[$_GET('soft')] != undefined) {
+file = $_GET('soft')
+//parent.$notif('Loading '+$_GET('soft').replace(/_/g," ")+'.')
+};
+};
+//
+// DOS FILES
+if (softs[file].machine == undefined) {
+var dosbox = new Emulator(document.querySelector("#canvas"),
+null,
+new DosBoxLoader(DosBoxLoader.emulatorJS("js/dosbox-sync.js"),
+DosBoxLoader.locateAdditionalEmulatorJS(locateAdditionalFiles),
+DosBoxLoader.nativeResolution(640, 400),
+DosBoxLoader.mountZip("c",
+//DosBoxLoader.fetchFile("Software", "softs/" + softs[file].file)),
+DosBoxLoader.fetchFile("Software", softs[file].file)),
+DosBoxLoader.startExe(softs[file].cmd)));
+dosbox.start({
+waitAfterDownloading: false
+});
+function locateAdditionalFiles(filename) {
+if (filename === "dosbox.html.mem") {
+return "js/dosbox-sync.mem";
+}
+return "js/" + filename;
+}
+}
+//
+// PC98 DOS FILES
+if (softs[file].machine == 'PC98') {
+var dosbox = new Emulator(document.querySelector("#canvas"),
+null,
+new PC98DosBoxLoader(PC98DosBoxLoader.emulatorJS("js/dosbox-x.js"),
+PC98DosBoxLoader.emulatorWASM("js/dosbox-x.wasm"),
+PC98DosBoxLoader.locateAdditionalEmulatorJS(locateAdditionalFiles),
+PC98DosBoxLoader.nativeResolution(640, 480),
+PC98DosBoxLoader.mountZip("c",
+PC98DosBoxLoader.fetchFile("Game File",
+"softs/" + softs[file].file)),
+PC98DosBoxLoader.mountZip("y",
+PC98DosBoxLoader.fetchFile("ROM File",
+"js/font.zip")),
+PC98DosBoxLoader.startExe(softs[file].cmd)))
+dosbox.start({
+waitAfterDownloading: true
+});
+function locateAdditionalFiles(filename) {
+if (filename === "dosbox.html.mem") {
+return "js/dosbox-sync.mem";
+}
+return "js/" + filename;
+}
+}
+if (softs[file].pointer == false) {
+c = document.getElementById("canvas")
+c.style.cursor = "none"
+};
+</script></body></html>

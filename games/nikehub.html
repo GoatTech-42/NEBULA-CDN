@@ -1,267 +1,212 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>NikeHub</title>
-    <link id="site-favicon" rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/NoseyGames/data@main/favicon.png">
-    
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@600;700;800;900&display=swap");
-
-        :root {
-            --bg:#000000;
-            --text:#e8e8e8;
-            --gray-1:#c8c8c8;
-            --gray-2:#888888;
-            --gray-3:#444444;
-            --glass:rgba(18,18,18,0.88);
-            --border:rgba(255,255,255,0.09);
-            --input-bg:rgba(28,28,28,0.75);
-            --cell-bg:#161616;
-            --hover:#282828;
-            --gray-med: var(--gray-2);
-            --text-white: var(--text);
-        }
-
-        *{box-sizing:border-box; margin:0; padding:0;}
-        
-        body {
-            min-height: 100vh;
-            margin:0;
-            background:var(--bg);
-            color:var(--text);
-            font-family:"Parkinsans", sans-serif;
-            font-weight:800;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        canvas#constellation-canvas {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .sidebar {
-            position:fixed;
-            left:12px;
-            top:12px;
-            width:76px;
-            height:calc(100vh - 24px);
-            background:var(--glass);
-            backdrop-filter:blur(12px);
-            padding:14px;
-            border-radius:10px;
-            border:1px solid var(--border);
-            z-index: 10;
-        }
-
-        .main-content {
-            margin-left:110px;
-            margin-right:300px;
-            padding:28px 36px;
-            width: calc(100% - 410px);
-            flex: 1;
-        }
-
-        header { margin-bottom:24px; opacity:0; animation:fadeIn 1s forwards 0.3s; }
-        @keyframes fadeIn{ to{opacity:1} }
-
-        h1 { font-size:clamp(2.8rem, 6vw, 4.5rem); font-weight:900; letter-spacing:-2px; text-transform:uppercase; color:var(--text); line-height: 0.8; text-shadow:0 0 15px rgba(255,255,255,0.1); }
-        .sub { font-size:12px; color:var(--gray-2); font-weight:700; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; }
-
-        .buttons-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 1s forwards 0.6s;
-        }
-
-        .game-btn {
-            background: var(--cell-bg);
-            border: 1px solid var(--border);
-            padding: 12px 24px;
-            border-radius: 12px;
-            color: var(--text);
-            font-family: inherit;
-            font-weight: 800;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.7);
-            white-space: nowrap;
-        }
-
-        .game-btn:hover { background: var(--hover); transform: translateY(-3px); border-color: var(--gray-1); filter: brightness(1.2); }
-
-        .search-sidebar {
-            position:fixed;
-            right:12px;
-            top:12px;
-            width:260px;
-            height:calc(100vh - 24px);
-            background:var(--glass);
-            backdrop-filter:blur(12px);
-            padding:14px;
-            border-radius:10px;
-            border:1px solid var(--border);
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-            z-index: 10;
-        }
-
-        .search-input {
-            background:var(--input-bg);
-            color:var(--text);
-            border:1px solid var(--border);
-            border-radius:10px;
-            padding:14px;
-            font-family: inherit;
-            font-weight: 700;
-            outline: none;
-        }
-
-        .action-btn {
-            background:var(--gray-3);
-            color:var(--text);
-            border:none;
-            border-radius:10px;
-            padding:12px;
-            font-family: inherit;
-            font-weight: 900;
-            cursor:pointer;
-            text-transform:uppercase;
-            transition: 0.18s;
-        }
-
-        .action-btn:hover { background: var(--gray-2); transform: translateY(-2px); }
-
-        .footer-credits {
-            width: 100%;
-            padding: 30px 0;
-            text-align: center;
-            font-family: "Parkinsans", sans-serif;
-            font-size: 0.85rem;
-            color: var(--gray-med);
-            letter-spacing: 1px;
-            z-index: 20;
-            background: transparent;
-        }
-        .footer-credits a {
-            color: var(--text-white);
-            text-decoration: underline;
-            text-underline-offset: 4px;
-            font-weight: 700;
-            margin-left: 5px;
-            transition: 0.3s;
-        }
-        .footer-credits a:hover { color: #ffffff; opacity: 0.8; }
-
-        @media (max-width:860px) {
-            .main-content { margin-left:88px; margin-right: 12px; width: auto; }
-            .search-sidebar { display: none; }
-        }
-    </style>
-</head>
-<body>
-
-    <canvas id="constellation-canvas"></canvas>
-
-    <div class="sidebar"></div>
-
-    <div class="search-sidebar">
-        <input class="search-input" id="searchBox" placeholder="SEARCH NIKEHUB..." oninput="filterGames()">
-        <button class="action-btn" onclick="disguise()">Disguise Tab</button>
-        <button class="action-btn" onclick="window.location.href='https://google.com'">Instant Exit</button>
-    </div>
-
-    <div class="main-content">
-        <header>
-            <h1>nikehub</h1>
-            <div class="sub">https://nikehub.org on top btw</div>
-        </header>
-        <div class="buttons-container" id="game-list"></div>
-    </div>
-
-    <div class="footer-credits">
-        NikeNetwork by NikeGtag | <a href="https://nikehub.org" target="_blank">-> unblocked games <-</a>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('constellation-canvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        const starCount = 125;
-        const maxDistance = 150;
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Star {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 1.8;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                ctx.fill();
-            }
-        }
-
-        function initStars() {
-            stars = [];
-            for (let i = 0; i < starCount; i++) stars.push(new Star());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(s => { s.update(); s.draw(); });
-            for (let i = 0; i < stars.length; i++) {
-                for (let j = i + 1; j < stars.length; j++) {
-                    const dx = stars[i].x - stars[j].x;
-                    const dy = stars[i].y - stars[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < maxDistance) {
-                        const alpha = 1 - (dist / maxDistance);
-                        ctx.beginPath();
-                        ctx.moveTo(stars[i].x, stars[i].y);
-                        ctx.lineTo(stars[j].x, stars[j].y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.4})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', resize);
-        resize(); initStars(); animate();
-
- const files = [
-  'cl1',
+<!-- NEBULA CDN | GoatTech Industries | Game: nikehub | File: nikehub.html | https://github.com/GoatTech-42/NEBULA-CDN -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>NikeHub</title><link id="site-favicon" rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/NoseyGames/data@main/favicon.png"><style>
+@import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@600;700;800;900&display=swap");
+:root {
+--bg:#000000;
+--text:#e8e8e8;
+--gray-1:#c8c8c8;
+--gray-2:#888888;
+--gray-3:#444444;
+--glass:rgba(18,18,18,0.88);
+--border:rgba(255,255,255,0.09);
+--input-bg:rgba(28,28,28,0.75);
+--cell-bg:#161616;
+--hover:#282828;
+--gray-med: var(--gray-2);
+--text-white: var(--text);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body {
+min-height: 100vh;
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:"Parkinsans", sans-serif;
+font-weight:800;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+canvas#constellation-canvas {
+position: fixed;
+inset: 0;
+z-index: -1;
+pointer-events: none;
+}
+.sidebar {
+position:fixed;
+left:12px;
+top:12px;
+width:76px;
+height:calc(100vh - 24px);
+background:var(--glass);
+backdrop-filter:blur(12px);
+padding:14px;
+border-radius:10px;
+border:1px solid var(--border);
+z-index: 10;
+}
+.main-content {
+margin-left:110px;
+margin-right:300px;
+padding:28px 36px;
+width: calc(100% - 410px);
+flex: 1;
+}
+header { margin-bottom:24px; opacity:0; animation:fadeIn 1s forwards 0.3s; }
+@keyframes fadeIn{ to{opacity:1} }
+h1 { font-size:clamp(2.8rem, 6vw, 4.5rem); font-weight:900; letter-spacing:-2px; text-transform:uppercase; color:var(--text); line-height: 0.8; text-shadow:0 0 15px rgba(255,255,255,0.1); }
+.sub { font-size:12px; color:var(--gray-2); font-weight:700; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; }
+.buttons-container {
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+padding-bottom: 40px;
+opacity: 0;
+animation: fadeIn 1s forwards 0.6s;
+}
+.game-btn {
+background: var(--cell-bg);
+border: 1px solid var(--border);
+padding: 12px 24px;
+border-radius: 12px;
+color: var(--text);
+font-family: inherit;
+font-weight: 800;
+text-align: center;
+cursor: pointer;
+transition: 0.2s;
+text-transform: uppercase;
+font-size: 0.85rem;
+box-shadow: inset 0 1px 4px rgba(0,0,0,0.7);
+white-space: nowrap;
+}
+.game-btn:hover { background: var(--hover); transform: translateY(-3px); border-color: var(--gray-1); filter: brightness(1.2); }
+.search-sidebar {
+position:fixed;
+right:12px;
+top:12px;
+width:260px;
+height:calc(100vh - 24px);
+background:var(--glass);
+backdrop-filter:blur(12px);
+padding:14px;
+border-radius:10px;
+border:1px solid var(--border);
+display:flex;
+flex-direction:column;
+gap:10px;
+z-index: 10;
+}
+.search-input {
+background:var(--input-bg);
+color:var(--text);
+border:1px solid var(--border);
+border-radius:10px;
+padding:14px;
+font-family: inherit;
+font-weight: 700;
+outline: none;
+}
+.action-btn {
+background:var(--gray-3);
+color:var(--text);
+border:none;
+border-radius:10px;
+padding:12px;
+font-family: inherit;
+font-weight: 900;
+cursor:pointer;
+text-transform:uppercase;
+transition: 0.18s;
+}
+.action-btn:hover { background: var(--gray-2); transform: translateY(-2px); }
+.footer-credits {
+width: 100%;
+padding: 30px 0;
+text-align: center;
+font-family: "Parkinsans", sans-serif;
+font-size: 0.85rem;
+color: var(--gray-med);
+letter-spacing: 1px;
+z-index: 20;
+background: transparent;
+}
+.footer-credits a {
+color: var(--text-white);
+text-decoration: underline;
+text-underline-offset: 4px;
+font-weight: 700;
+margin-left: 5px;
+transition: 0.3s;
+}
+.footer-credits a:hover { color: #ffffff; opacity: 0.8; }
+@media (max-width:860px) {
+.main-content { margin-left:88px; margin-right: 12px; width: auto; }
+.search-sidebar { display: none; }
+}
+</style></head><body><canvas id="constellation-canvas"></canvas><div class="sidebar"></div><div class="search-sidebar"><input class="search-input" id="searchBox" placeholder="SEARCH NIKEHUB..." oninput="filterGames()"><button class="action-btn" onclick="disguise()">Disguise Tab</button><button class="action-btn" onclick="window.location.href='https://google.com'">Instant Exit</button></div><div class="main-content"><header><h1>nikehub</h1><div class="sub">https://nikehub.org on top btw</div></header><div class="buttons-container" id="game-list"></div></div><div class="footer-credits">
+NikeNetwork by NikeGtag | <a href="https://nikehub.org" target="_blank">-> unblocked games <-</a></div><script>
+const canvas = document.getElementById('constellation-canvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+const starCount = 125;
+const maxDistance = 150;
+function resize() {
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+}
+class Star {
+constructor() {
+this.x = Math.random() * canvas.width;
+this.y = Math.random() * canvas.height;
+this.vx = (Math.random() - 0.5) * 0.5;
+this.vy = (Math.random() - 0.5) * 0.5;
+this.radius = Math.random() * 1.8;
+}
+update() {
+this.x += this.vx;
+this.y += this.vy;
+if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+}
+draw() {
+ctx.beginPath();
+ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+ctx.fill();
+}
+}
+function initStars() {
+stars = [];
+for (let i = 0; i < starCount; i++) stars.push(new Star());
+}
+function animate() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+stars.forEach(s => { s.update(); s.draw(); });
+for (let i = 0; i < stars.length; i++) {
+for (let j = i + 1; j < stars.length; j++) {
+const dx = stars[i].x - stars[j].x;
+const dy = stars[i].y - stars[j].y;
+const dist = Math.sqrt(dx * dx + dy * dy);
+if (dist < maxDistance) {
+const alpha = 1 - (dist / maxDistance);
+ctx.beginPath();
+ctx.moveTo(stars[i].x, stars[i].y);
+ctx.lineTo(stars[j].x, stars[j].y);
+ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.4})`;
+ctx.lineWidth = 0.6;
+ctx.stroke();
+ctx.closePath();
+}
+}
+}
+requestAnimationFrame(animate);
+}
+window.addEventListener('resize', resize);
+resize(); initStars(); animate();
+const files = [
+'cl1',
 'cl10bullets',
 'cl10minutestildawn',
 'cl12minibattles',
@@ -1713,7 +1658,6 @@
 'clsilenthillalt',
 'clsilk',
 'clsiloshowdow',
-
 'clsixwaystodie',
 'clskateit',
 'clskibidiinthebackrooms',
@@ -2196,88 +2140,62 @@
 'superdromebugs',
 'vvvvvv',
 'wilywars'
-]; 
-
-        function renderGames(list) {
-            const container = document.getElementById("game-list");
-            if (!container) return;
-            container.innerHTML = '';
-            list.forEach(file => {
-                const btn = document.createElement('button');
-                btn.className = 'game-btn';
-                btn.textContent = file.replace(/^cl/i, '');
-                btn.onclick = () => launchGame(file);
-                container.appendChild(btn);
-            });
-        }
-
-        async function launchGame(file) {
-            const normalized = file.endsWith('.html') ? file : file + '.html';
-            const url = `https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile/UGS-Files/${encodeURIComponent(normalized)}`;
-            
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Fetch failed");
-                let rawGameCode = await response.text();
-                
-                const baseTag = `<base href="https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile/UGS-Files/">`;
-                rawGameCode = rawGameCode.includes('<head>') ? rawGameCode.replace('<head>', '<head>' + baseTag) : baseTag + rawGameCode;
-
-                const encodedCode = btoa(unescape(encodeURIComponent(rawGameCode)));
-
-                const executorTemplate = `
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>Google Drive</title>
-                        <link rel="icon" href="https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png">
-                        <style>
-                            @import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@600;700;800;900&display=swap");
-                            body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; font-family: "Parkinsans", sans-serif; }
-                            #nav-bar { position: absolute; top: 0; left: 0; width: 100%; height: 40px; background: #111; display: flex; align-items: center; border-bottom: 1px solid #333; z-index: 99999; }
-                            #back-btn { color: #fff; border: 1px solid #444; border-radius: 4px; background: #222; padding: 4px 12px; font-weight: 800; font-size: 11px; text-transform: uppercase; cursor: pointer; margin-left: 15px; font-family: "Parkinsans", sans-serif; }
-                            #back-btn:hover { background: #333; border-color: #666; }
-                            iframe { width: 100%; height: calc(100% - 40px); border: none; margin-top: 40px; }
-                        </style>
-                    </head>
-                    <body>
-                        <div id="nav-bar">
-                            <button id="back-btn" onclick="window.location.replace('${window.location.origin}${window.location.pathname}')">← back to nikehub singlefile</button>
-                        </div>
-                        <iframe id="execution-area"></iframe>
-                        <script>
-                            (function() {
-                                const frame = document.getElementById('execution-area');
-                                const doc = frame.contentWindow.document;
-                                const decoded = decodeURIComponent(escape(atob("${encodedCode}")));
-                                doc.open();
-                                doc.write(decoded);
-                                doc.close();
-                            })();
-                        <\/script>
-                    </body>
-                    </html>
-                `;
-
-                document.open();
-                document.write(executorTemplate);
-                document.close();
-            } catch (err) {
-                alert("Execution error: " + err.message);
-            }
-        }
-
-        function filterGames() {
-            const q = document.getElementById('searchBox').value.toLowerCase();
-            renderGames(files.filter(f => f.toLowerCase().includes(q)));
-        }
-
-        function disguise() {
-            document.title = "Google Drive";
-            document.getElementById('site-favicon').href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
-        }
-
-        renderGames(files);
-    </script>
-</body>
-</html>
+];
+function renderGames(list) {
+const container = document.getElementById("game-list");
+if (!container) return;
+container.innerHTML = '';
+list.forEach(file => {
+const btn = document.createElement('button');
+btn.className = 'game-btn';
+btn.textContent = file.replace(/^cl/i, '');
+btn.onclick = () => launchGame(file);
+container.appendChild(btn);
+});
+}
+async function launchGame(file) {
+const normalized = file.endsWith('.html') ? file : file + '.html';
+const url = `https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile/UGS-Files/${encodeURIComponent(normalized)}`;
+try {
+const response = await fetch(url);
+if (!response.ok) throw new Error("Fetch failed");
+let rawGameCode = await response.text();
+const baseTag = `<base href="https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile/UGS-Files/">`;
+rawGameCode = rawGameCode.includes('<head>') ? rawGameCode.replace('<head>', '<head>' + baseTag) : baseTag + rawGameCode;
+const encodedCode = btoa(unescape(encodeURIComponent(rawGameCode)));
+const executorTemplate = `
+<!DOCTYPE html><html><head><title>Google Drive</title><link rel="icon" href="https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"><style>
+@import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@600;700;800;900&display=swap");
+body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; font-family: "Parkinsans", sans-serif; }
+#nav-bar { position: absolute; top: 0; left: 0; width: 100%; height: 40px; background: #111; display: flex; align-items: center; border-bottom: 1px solid #333; z-index: 99999; }
+#back-btn { color: #fff; border: 1px solid #444; border-radius: 4px; background: #222; padding: 4px 12px; font-weight: 800; font-size: 11px; text-transform: uppercase; cursor: pointer; margin-left: 15px; font-family: "Parkinsans", sans-serif; }
+#back-btn:hover { background: #333; border-color: #666; }
+iframe { width: 100%; height: calc(100% - 40px); border: none; margin-top: 40px; }
+</style></head><body><div id="nav-bar"><button id="back-btn" onclick="window.location.replace('${window.location.origin}${window.location.pathname}')">← back to nikehub singlefile</button></div><iframe id="execution-area"></iframe><script>
+(function() {
+const frame = document.getElementById('execution-area');
+const doc = frame.contentWindow.document;
+const decoded = decodeURIComponent(escape(atob("${encodedCode}")));
+doc.open();
+doc.write(decoded);
+doc.close();
+})();
+<\/script></body></html>
+`;
+document.open();
+document.write(executorTemplate);
+document.close();
+} catch (err) {
+alert("Execution error: " + err.message);
+}
+}
+function filterGames() {
+const q = document.getElementById('searchBox').value.toLowerCase();
+renderGames(files.filter(f => f.toLowerCase().includes(q)));
+}
+function disguise() {
+document.title = "Google Drive";
+document.getElementById('site-favicon').href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
+}
+renderGames(files);
+</script></body></html>
