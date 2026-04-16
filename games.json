@@ -13,7 +13,7 @@
     "totalSizeBytes": 1709388255,
     "totalSizeMB": 1630.2,
     "categories": {
-      "Other": 1802,
+      "Other": 1801,
       "Pokemon": 134,
       "Platformer": 105,
       "Mario": 104,
@@ -22,7 +22,7 @@
       "Strategy": 72,
       "Fighting": 71,
       "Sports": 68,
-      "Shooter": 51,
+      "Shooter": 52,
       "Horror": 51,
       "Puzzle": 46,
       "Minecraft": 41,
@@ -5904,14 +5904,14 @@
       "slug": "brotato",
       "file": "games/brotato.html",
       "filename": "brotato.html",
-      "category": "Other",
+      "category": "Shooter",
       "tags": [
         "offline",
         "browser",
         "html5",
         "singleplayer"
       ],
-      "description": "Play Brotato — a other game playable directly in your browser. No downloads required.",
+      "description": "Play Brotato — a shooter game playable directly in your browser. No downloads required.",
       "size": 3885,
       "originalSize": 3885,
       "hash": "a958ed70c0af6ffa"
