@@ -1080,8 +1080,22 @@ window.playGame = function(slug, event) {
     loadTxt.textContent = 'Failed to load game.';
   };
 
-  /* Small delay so overlay animation plays first */
-  setTimeout(() => { frame.src = gameUrl(game); }, 80);
+  /* Small delay so overlay animation plays first, then fetch & render */
+  setTimeout(() => {
+    fetch(gameUrl(game))
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to fetch game');
+        return r.text();
+      })
+      .then(html => {
+        const blob = new Blob([html], { type: 'text/html' });
+        const blobUrl = URL.createObjectURL(blob);
+        frame.src = blobUrl;
+      })
+      .catch(err => {
+        loadTxt.textContent = 'Failed to load game: ' + err.message;
+      });
+  }, 80);
 
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1096,14 +1110,30 @@ window.stealthGame = function(slug, event) {
   const url = gameUrl(game);
   const win = window.open('about:blank', '_blank');
   if (!win) { alert('Popup blocked — please allow popups for this site.'); return; }
-  win.document.open();
-  win.document.write(
-    `<!DOCTYPE html><html><head><title>${esc(game.name)}</title>`+
-    `<style>*{margin:0;padding:0}html,body{width:100%;height:100%;overflow:hidden;background:#000}`+
-    `iframe{width:100%;height:100%;border:none}</style></head>`+
-    `<body><iframe src="${esc(url)}" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" allowfullscreen></iframe></body></html>`
-  );
-  win.document.close();
+
+  /* Fetch and render game as blob URL to bypass content-type issues */
+  fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error('Failed to fetch game');
+      return r.text();
+    })
+    .then(html => {
+      const blob = new Blob([html], { type: 'text/html' });
+      const blobUrl = URL.createObjectURL(blob);
+      win.document.open();
+      win.document.write(
+        `<!DOCTYPE html><html><head><title>${esc(game.name)}</title>`+
+        `<style>*{margin:0;padding:0}html,body{width:100%;height:100%;overflow:hidden;background:#000}`+
+        `iframe{width:100%;height:100%;border:none}</style></head>`+
+        `<body><iframe src="${esc(blobUrl)}" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" allowfullscreen></iframe></body></html>`
+      );
+      win.document.close();
+    })
+    .catch(err => {
+      win.document.open();
+      win.document.write(`<html><body style="color:#fff;background:#000;padding:2rem"><h2>Failed to Load Game</h2><p>${esc(err.message)}</p></body></html>`);
+      win.document.close();
+    });
 };
 
 /* ─── Close modal ───────────────────────────────────── */
@@ -1128,7 +1158,21 @@ document.getElementById('btn-fullscreen').onclick = function() {
 };
 
 document.getElementById('btn-new-tab').onclick = function() {
-  if (currentGame) window.open(gameUrl(currentGame), '_blank');
+  if (!currentGame) return;
+  const gameUrlStr = gameUrl(currentGame);
+  fetch(gameUrlStr)
+    .then(r => {
+      if (!r.ok) throw new Error('Failed to fetch game');
+      return r.text();
+    })
+    .then(html => {
+      const blob = new Blob([html], { type: 'text/html' });
+      const blobUrl = URL.createObjectURL(blob);
+      window.open(blobUrl, '_blank');
+    })
+    .catch(err => {
+      alert('Failed to open game: ' + err.message);
+    });
 };
 
 document.getElementById('btn-stealth').onclick = function() {
