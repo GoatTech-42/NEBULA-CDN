@@ -771,7 +771,7 @@ img{display:block}
     </div>
     <iframe
       id="game-frame"
-      sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock"
+      sandbox="allow-scripts allow-popups allow-forms allow-modals allow-pointer-lock"
       allowfullscreen
       allow="fullscreen"
     ></iframe>
@@ -1125,7 +1125,7 @@ window.stealthGame = function(slug, event) {
         `<!DOCTYPE html><html><head><title>${esc(game.name)}</title>`+
         `<style>*{margin:0;padding:0}html,body{width:100%;height:100%;overflow:hidden;background:#000}`+
         `iframe{width:100%;height:100%;border:none}</style></head>`+
-        `<body><iframe src="${esc(blobUrl)}" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" allowfullscreen></iframe></body></html>`
+        `<body><iframe src="${esc(blobUrl)}" sandbox="allow-scripts allow-popups allow-forms allow-modals allow-pointer-lock" allowfullscreen></iframe></body></html>`
       );
       win.document.close();
     })
