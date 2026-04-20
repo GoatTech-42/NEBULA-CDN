@@ -33,7 +33,7 @@ CATEGORY_RULES = {
     "RPG": ["rpg", "quest", "adventure-", "earthbound", "chrono", "final-fantasy", "ff3", "golden-sun", "dragon-quest", "diablo", "undertale", "deltarune"],
     "Strategy": ["tower-defense", "btd", "bloons", "war", "command", "empire", "clash", "defense", "tycoon"],
     "Horror": ["fnaf", "horror", "creepy", "scary", "backroom", "baldi", "dead-", "zombie", "evil", "buckshot"],
-    "Retro": [],
+    "Retro": ["retro", "nes", "snes", "n64", "gba", "genesis", "arcade", "atari"],
     "Simulation": ["simulator", "simulation", "farming", "cooking", "life"],
     "Action": [],
 }
