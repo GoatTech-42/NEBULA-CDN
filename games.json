@@ -29637,8 +29637,8 @@
       "id": "ovo",
       "name": "Ovo",
       "slug": "ovo",
-      "file": "games/ovo/ovo-main.html",
-      "filename": "ovo-main.html",
+      "file": "games/ovo/ovo-main-v2.html",
+      "filename": "ovo-main-v2.html",
       "category": "Other",
       "tags": [
         "offline",
