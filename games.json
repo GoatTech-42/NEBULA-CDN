@@ -29688,24 +29688,6 @@
       "hash": "81d2541005981139"
     },
     {
-      "id": "ovofixed",
-      "name": "Ovofixed",
-      "slug": "ovofixed",
-      "file": "games/ovofixed.html",
-      "filename": "ovofixed.html",
-      "category": "Other",
-      "tags": [
-        "offline",
-        "browser",
-        "html5",
-        "singleplayer"
-      ],
-      "description": "Play Ovofixed — a other game playable directly in your browser. No downloads required.",
-      "size": 4774,
-      "originalSize": 6759,
-      "hash": "1c680c3218abd489"
-    },
-    {
       "id": "pacman",
       "name": "Pacman",
       "slug": "pacman",
