@@ -29637,16 +29637,16 @@
       "id": "ovo",
       "name": "Ovo",
       "slug": "ovo",
-      "file": "games/ovo/ovo-main-v2.html",
-      "filename": "ovo-main-v2.html",
-      "category": "Other",
+      "file": "games/ovo.html",
+      "filename": "ovo.html",
+      "category": "Platformer",
       "tags": [
         "offline",
         "browser",
         "html5",
         "singleplayer"
       ],
-      "description": "Play Ovo — a other game playable directly in your browser. No downloads required.",
+      "description": "Play Ovo — a platformer game playable directly in your browser. No downloads required.",
       "size": 96246,
       "originalSize": 97504,
       "hash": "c34c85bca5bf695b"
@@ -29657,14 +29657,14 @@
       "slug": "ovo2",
       "file": "games/ovo2.html",
       "filename": "ovo2.html",
-      "category": "Other",
+      "category": "Platformer",
       "tags": [
         "offline",
         "browser",
         "html5",
         "singleplayer"
       ],
-      "description": "Play Ovo 2 — a other game playable directly in your browser. No downloads required.",
+      "description": "Play Ovo 2 — a platformer game playable directly in your browser. No downloads required.",
       "size": 1808,
       "originalSize": 1986,
       "hash": "328da98d5998d823"
@@ -29675,14 +29675,14 @@
       "slug": "ovodimensions",
       "file": "games/ovodimensions.html",
       "filename": "ovodimensions.html",
-      "category": "Other",
+      "category": "Platformer",
       "tags": [
         "offline",
         "browser",
         "html5",
         "singleplayer"
       ],
-      "description": "Play Ovodimensions — a other game playable directly in your browser. No downloads required.",
+      "description": "Play Ovodimensions — a platformer game playable directly in your browser. No downloads required.",
       "size": 5061,
       "originalSize": 6495,
       "hash": "81d2541005981139"
@@ -29700,7 +29700,7 @@
         "html5",
         "singleplayer"
       ],
-      "description": "Play Pacman — a other game playable directly in your browser. No downloads required.",
+      "description": "Play Pacman — a platformer game playable directly in your browser. No downloads required.",
       "size": 2214,
       "originalSize": 2904,
       "hash": "b03cb80a858d625d"
@@ -29718,7 +29718,7 @@
         "html5",
         "singleplayer"
       ],
-      "description": "Play Pacmana — a other game playable directly in your browser. No downloads required.",
+      "description": "Play Pacmana — a platformer game playable directly in your browser. No downloads required.",
       "size": 1315,
       "originalSize": 1734,
       "hash": "e61c23f5093df2ef"
@@ -29729,14 +29729,14 @@
       "slug": "pacmansuperfast",
       "file": "games/pacmansuperfast.html",
       "filename": "pacmansuperfast.html",
-      "category": "Other",
+      "category": "Platformer",
       "tags": [
         "offline",
         "browser",
         "html5",
         "singleplayer"
       ],
-      "description": "Play Pacmansuperfast — a other game playable directly in your browser. No downloads required.",
+      "description": "Play Pacmansuperfast — a platformer game playable directly in your browser. No downloads required.",
       "size": 1209,
       "originalSize": 1431,
       "hash": "c7609383ed92781d"
