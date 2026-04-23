@@ -268,8 +268,9 @@ img{display:block}
 .cat-item{
   display:flex;align-items:center;gap:0.6rem;
   padding:0.52rem 0.75rem;
-  border-radius:var(--radius-xs);
+  border-radius:0 999px 999px 0;
   border:1px solid transparent;
+  border-left:none;
   color:var(--text2);
   font-size:0.82rem;
   font-weight:500;
@@ -279,31 +280,31 @@ img{display:block}
   text-align:left;
   width:100%;
   position:relative;
+  margin-left:0.45rem;
 }
-.cat-item:hover{background:var(--surface2);color:var(--text);transform:translateX(2px)}
+.cat-item:hover{background:rgba(255,255,255,0.05);color:var(--text);transform:translateX(2px)}
 .cat-item.active{
-  background:var(--accent-dim);
-  color:var(--accent);
+  background:rgba(125,212,198,0.12);
+  color:#eef7f5;
   font-weight:700;
 }
 .cat-item.active::before{
-  content:'';position:absolute;left:-0.75rem;top:22%;bottom:22%;
-  width:3px;background:var(--accent);border-radius:0 3px 3px 0;
+  content:'';position:absolute;left:-0.45rem;top:0;bottom:0;
+  width:3px;background:var(--accent);border-radius:3px;
   box-shadow:0 0 10px var(--accent-glow);
 }
-.cat-item .cat-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
-.cat-item .cat-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-item .cat-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:0.01em}
 .cat-item .cat-count{
   font-size:0.68rem;
   font-weight:700;
   color:var(--text3);
-  background:var(--surface3);
+  background:rgba(255,255,255,0.04);
   border-radius:999px;
   padding:0.12rem 0.5rem;
   flex-shrink:0;
   font-variant-numeric:tabular-nums;
 }
-.cat-item.active .cat-count{background:var(--accent-dim);color:var(--accent)}
+.cat-item.active .cat-count{background:rgba(255,255,255,0.12);color:#eef7f5}
 
 /* ─── Main Content ─────────────────────────────────────── */
 .main{
@@ -1135,9 +1136,7 @@ function buildSidebar(counts, cats) {
   const totalCount = Object.values(counts).reduce((s,v)=>s+v, 0);
 
   function itemHtml(cat, count, isAll) {
-    const icon = catIcon(cat);
     return `<button class="cat-item${isAll?' active':''}" data-cat="${esc(cat)}" onclick="selectCat('${esc(cat)}')">
-      <span class="cat-icon">${icon}</span>
       <span class="cat-name">${esc(cat)}</span>
       <span class="cat-count">${count.toLocaleString()}</span>
     </button>`;
@@ -1151,10 +1150,10 @@ function buildSidebar(counts, cats) {
   document.getElementById('cat-list').innerHTML = html;
 
   /* Mobile chips */
-  let mHtml = `<button class="mobile-cat-chip active" data-cat="All" onclick="selectCat('All')">🧪 All</button>`;
+  let mHtml = `<button class="mobile-cat-chip active" data-cat="All" onclick="selectCat('All')">All</button>`;
   for (const cat of sorted) {
     if (counts[cat] > 0) {
-      mHtml += `<button class="mobile-cat-chip" data-cat="${esc(cat)}" onclick="selectCat('${esc(cat)}')">${catIcon(cat)} ${esc(cat)}</button>`;
+      mHtml += `<button class="mobile-cat-chip" data-cat="${esc(cat)}" onclick="selectCat('${esc(cat)}')">${esc(cat)}</button>`;
     }
   }
   document.getElementById('mobile-cats').innerHTML = mHtml;
